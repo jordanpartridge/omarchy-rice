@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "the-shit.music",
+  "name": "THE SHIT / music",
+  "version": "0.1.0",
+  "author": "THE SHIT",
+  "license": "MIT",
+  "description": "Bar widget for the-shit/music. Now-playing, skip, chill/flow/hype. Not a Spotify client.",
+  "kinds": ["service", "bar-widget"],
+  "keepLoaded": true,
+  "entryPoints": {
+    "service": "Service.qml",
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "THE SHIT / music",
+    "description": "Spotify via the-shit/music CLI — now-playing, skip, moods",
+    "category": "Media",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}

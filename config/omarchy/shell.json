@@ -1,0 +1,90 @@
+{
+  "bar": {
+    "centerAnchor": "omarchy.weather",
+    "layout": {
+      "center": [
+        {
+          "id": "omarchy.indicators"
+        },
+        {
+          "id": "omarchy.keyboard-layout"
+        },
+        {
+          "id": "jordan.weather"
+        },
+        {
+          "id": "omarchy.system-update"
+        }
+      ],
+      "left": [
+        {
+          "id": "omarchy.menu"
+        },
+        {
+          "id": "omarchy.workspaces"
+        }
+      ],
+      "right": [
+        {
+          "id": "omarchy.tray"
+        },
+        {
+          "id": "io.weirdware.blueferry"
+        },
+        {
+          "id": "jordan.tailscale"
+        },
+        {
+          "id": "jordan.github-orgs"
+        },
+        {
+          "id": "jordan.agents",
+          "providers": {
+            "claude": {
+              "enabled": false
+            },
+            "codex": {
+              "enabled": false
+            },
+            "fireworks": {
+              "enabled": false
+            }
+          }
+        },
+        {
+          "id": "jordan.bluetooth"
+        },
+        {
+          "id": "jordan.network"
+        },
+        {
+          "id": "jordan.audio"
+        },
+        {
+          "id": "jordan.power"
+        },
+        {
+          "id": "jordan.monitor"
+        }
+      ]
+    },
+    "position": "bottom",
+    "transparent": false
+  },
+  "idle": {
+    "lock": 300,
+    "screensaver": 150
+  },
+  "plugins": [
+    {
+      "id": "jordan.os-clock"
+    },
+    {
+      "id": "the-shit.music"
+    },
+    {
+      "id": "jordan.xp-clock"
+    }
+  ],
+  "version": 1
+}

@@ -1,0 +1,16 @@
+# Omarchy / editor backups
+*.bak
+*.bak.*
+*.sample
+
+# Never vendor cloned plugin git metadata
+**/.git/
+
+# Local-only capture (webcam face-line lives on Thor, not in git)
+branding/screensaver-webcam.png
+config/omarchy/branding/screensaver-webcam.png
+
+# Generated / machine-local
+.DS_Store
+*.swp
+*~

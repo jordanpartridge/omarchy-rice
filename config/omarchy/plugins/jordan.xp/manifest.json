@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "jordan.xp",
+  "name": "Jordan XP Start",
+  "version": "1.0.0",
+  "author": "Jordan Partridge",
+  "license": "MIT",
+  "description": "Windows XP Start button: orgs, fleet, games, hobbies, and Display Properties for the Jordan XP theme.",
+  "kinds": ["bar-widget"],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Start",
+    "description": "Green Start button — Jordan XP menu and theme tweaks",
+    "category": "Launcher",
+    "allowMultiple": false,
+    "defaultSection": "left"
+  }
+}

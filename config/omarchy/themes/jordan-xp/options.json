@@ -1,0 +1,9 @@
+{
+  "variant": "luna",
+  "gaps": "classic",
+  "border": "chunky",
+  "shadows": true,
+  "chrome": "xp",
+  "start": "bright",
+  "bar_alpha": 1.0
+}

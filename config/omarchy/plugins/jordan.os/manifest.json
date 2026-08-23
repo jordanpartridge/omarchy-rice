@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "jordan.os",
+  "name": "Jordan OS Start",
+  "version": "1.0.0",
+  "author": "Jordan Partridge",
+  "license": "MIT",
+  "description": "Jordan OS cabinet: sleeve, night-shift, Elon, and Mac · 95 · XP · DOS era keys.",
+  "kinds": ["bar-widget"],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Start",
+    "description": "Jordan OS cabinet — sleeve, packets, era keys",
+    "category": "Launcher",
+    "allowMultiple": false,
+    "defaultSection": "left"
+  }
+}

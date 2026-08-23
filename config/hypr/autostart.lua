@@ -1,0 +1,3 @@
+-- Extra autostart processes.
+-- o.launch_on_start("my-service")
+-- Steam → local-ai pause is systemd --user local-ai-steam-watch.service

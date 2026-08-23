@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "jordan.os-clock",
+  "name": "Jordan OS clock",
+  "version": "1.0.0",
+  "author": "Jordan Partridge",
+  "license": "MIT",
+  "description": "Floating desktop clock gadget. Era-skinned with the Jordan OS cabinet.",
+  "kinds": ["panel"],
+  "keepLoaded": true,
+  "entryPoints": {
+    "panel": "Gadget.qml"
+  }
+}

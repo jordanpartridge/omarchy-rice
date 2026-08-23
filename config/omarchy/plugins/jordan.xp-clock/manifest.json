@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "jordan.xp-clock",
+  "name": "Jordan XP clock",
+  "version": "1.0.0",
+  "author": "Jordan Partridge",
+  "license": "MIT",
+  "description": "Wide draggable desktop clock gadget. Sits on the wallpaper; drag to move, right-click to snap corners, middle-click for always-on-top.",
+  "kinds": ["panel"],
+  "keepLoaded": true,
+  "entryPoints": {
+    "panel": "Gadget.qml"
+  }
+}

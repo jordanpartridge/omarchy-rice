@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "jordan.github-orgs",
+  "name": "GitHub orgs",
+  "version": "0.1.0",
+  "author": "Jordan Partridge",
+  "license": "MIT",
+  "description": "Glance at jordanpartridge, the-shit, conduit-ui, and synapse-sentinel: counts, night-ready, and high-value PRs and issues.",
+  "kinds": ["bar-widget"],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "GitHub orgs",
+    "description": "Per-org issue and PR counts plus the high-value inbox",
+    "category": "Info",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}

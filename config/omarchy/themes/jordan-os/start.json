@@ -1,0 +1,17 @@
+{
+  "from": "#4A8AE0",
+  "to": "#6AA8F0",
+  "bar": "#3A7BD4",
+  "bar_text": "#FFFEF8",
+  "header": "#4A8AE0",
+  "footer": "#3A7BD4",
+  "ink": "#F4F1E4",
+  "muted": "#A8B4A8",
+  "select": "#0A3A6A",
+  "select_text": "#FFFEF8",
+  "paper": "#0A0C10",
+  "era": "mac",
+  "room": "night",
+  "shape": "aqua",
+  "chrome": "xp"
+}

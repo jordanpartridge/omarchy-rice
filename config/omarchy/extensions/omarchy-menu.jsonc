@@ -1,0 +1,111 @@
+{
+  // Extend the Quickshell Omarchy menu with JSONC.
+  //
+  // IDs are object keys. The parent is inferred from the dotted id, so
+  // "personal.notes" appears under "personal", and "personal" appears on the
+  // root menu. Reuse an existing id to override/extend it.
+  //
+  // Fields:
+  //   icon        Nerd Font glyph shown in the icon column.
+  //   label       Visible row title.
+  //   action      Shell command to run. If omitted, the row is a submenu.
+  //   target      Existing submenu id to open. Use for links/aliases.
+  //   provider    Runtime provider function/command returning JSON rows.
+  //   aliases     alternate `omarchy menu summon <name>` routes; also searchable.
+  //   description Optional subtitle and extra search text.
+  //   when        Shell condition; hide row when it fails.
+  //   checked     Shell condition; append ✓ when it succeeds.
+  //
+  // Examples:
+  // "personal": {"icon":"","label":"Personal"},
+  // "personal.notes": {"icon":"󰎞","label":"Notes","action":"omarchy-launch-editor ~/notes"},
+  // "personal.files": {"icon":"","label":"Files","action":"uwsm-app -- nautilus ~/Documents"},
+  //
+  // Only use provider when a provider_name function or command named "name"
+  // returns JSON rows. Static submenus only need dotted ids.
+  //
+  // Example: replace the default About action by reusing the same id. Existing
+  // fields are kept unless overridden.
+  // "about": {"icon":"","label":"About","action":"omarchy-launch-or-focus-tui \"zsh -c 'fastfetch; read -k 1'\""},
+
+  "github-orgs": {
+    "icon": "󰊤",
+    "label": "GitHub orgs",
+    "action": "omarchy-shell shell toggle jordan.github-orgs",
+    "description": "Glance at jordanpartridge, the-shit, conduit-ui, synapse-sentinel"
+  },
+
+  // Music cabinet. Super+M summons this submenu (not the premium TUI).
+  "music": {
+    "icon": "󰎈",
+    "label": "Music",
+    "aliases": ["spotify"],
+    "description": "Start, stop, search, playlists — the-shit/music"
+  },
+  "music.start": {
+    "icon": "",
+    "label": "Start",
+    "description": "Resume playback",
+    "action": "spotify resume --json"
+  },
+  "music.stop": {
+    "icon": "",
+    "label": "Stop",
+    "description": "Pause playback",
+    "action": "spotify pause --json"
+  },
+  "music.search": {
+    "icon": "",
+    "label": "Search",
+    "aliases": ["music.find"],
+    "description": "Typeahead catalog via spotify find",
+    "action": "omarchy-shell jordan.os-45 find"
+  },
+  "music.queue": {
+    "icon": "󰐑",
+    "label": "Queue",
+    "description": "Search and add to queue",
+    "action": "omarchy-shell jordan.os-45 queue"
+  },
+  "music.skip": {
+    "icon": "󰒭",
+    "label": "Skip",
+    "action": "omarchy-shell jordan.os-45 skip"
+  },
+  "music.playlists": {
+    "icon": "󰐑",
+    "label": "Playlists",
+    "description": "Chill, flow, hype queues"
+  },
+  "music.playlists.chill": {
+    "icon": "󰽺",
+    "label": "Chill",
+    "action": "spotify chill --json"
+  },
+  "music.playlists.flow": {
+    "icon": "󰐹",
+    "label": "Flow",
+    "action": "spotify flow --json"
+  },
+  "music.playlists.hype": {
+    "icon": "󰓏",
+    "label": "Hype",
+    "action": "spotify hype --json"
+  },
+  "music.sleeve": {
+    "icon": "󰎈",
+    "label": "Show 45",
+    "description": "Bring the vinyl gadget back",
+    "action": "omarchy-shell jordan.os-45 open"
+  },
+
+  // Default Agent picker: Grok only.
+  "setup.default.agent.claude": {"when": "false"},
+  "setup.default.agent.codex": {"when": "false"},
+  "setup.default.agent.copilot": {"when": "false"},
+  "setup.default.agent.crush": {"when": "false"},
+  "setup.default.agent.gemini": {"when": "false"},
+  "setup.default.agent.omp": {"when": "false"},
+  "setup.default.agent.opencode": {"when": "false"},
+  "setup.default.agent.pi": {"when": "false"}
+}

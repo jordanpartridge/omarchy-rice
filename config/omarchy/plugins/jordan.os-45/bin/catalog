@@ -1,0 +1,59 @@
+#!/usr/bin/env php
+<?php
+
+// Catalog helper for jordan.os-45. Same searchMultiple(…, 12) path as
+// `spotify find`. QML never talks to the Spotify Web API.
+
+$musicRoot = getenv('HOME') . '/.config/composer/vendor/the-shit/music';
+
+function catalog_out(array $payload, int $code = 0): never
+{
+    echo json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), "\n";
+    exit($code);
+}
+
+$verb = $argv[1] ?? '';
+$arg = $argv[2] ?? '';
+
+if (! is_dir($musicRoot) || ! is_file($musicRoot.'/bootstrap/app.php')) {
+    catalog_out(['ok' => false, 'error' => 'the-shit/music not installed'], 1);
+}
+
+if ($verb === '') {
+    catalog_out(['ok' => false, 'error' => 'usage: catalog search <query> | play <uri> | queue <uri>'], 1);
+}
+
+require $musicRoot.'/vendor/autoload.php';
+$app = require $musicRoot.'/bootstrap/app.php';
+$kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
+$kernel->bootstrap();
+
+try {
+    if ($verb === 'search') {
+        $query = trim($arg);
+        if (strlen($query) < 2) {
+            catalog_out(['ok' => true, 'tracks' => []]);
+        }
+        $discovery = $app->make(App\Services\SpotifyDiscoveryService::class);
+        $tracks = $discovery->searchMultiple($query, 'track', 12);
+        catalog_out(['ok' => true, 'tracks' => $tracks]);
+    }
+
+    if ($verb === 'play' || $verb === 'queue') {
+        $uri = trim($arg);
+        if ($uri === '' || ! str_starts_with($uri, 'spotify:track:')) {
+            catalog_out(['ok' => false, 'error' => 'need spotify:track URI'], 1);
+        }
+        $player = $app->make(App\Services\SpotifyPlayerService::class);
+        if ($verb === 'queue') {
+            $player->addToQueue($uri);
+            catalog_out(['ok' => true, 'action' => 'queue', 'uri' => $uri]);
+        }
+        $player->play($uri);
+        catalog_out(['ok' => true, 'action' => 'play', 'uri' => $uri]);
+    }
+} catch (Throwable $e) {
+    catalog_out(['ok' => false, 'error' => $e->getMessage()], 1);
+}
+
+catalog_out(['ok' => false, 'error' => 'unknown verb'], 1);

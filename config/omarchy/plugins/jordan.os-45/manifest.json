@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "jordan.os-45",
+  "name": "Jordan OS 45",
+  "version": "1.0.0",
+  "author": "Jordan Partridge",
+  "license": "MIT",
+  "description": "Floating 45 gadget and catalog Find overlay. MPRIS first, the-shit/music CLI fallback. QML never talks to the Spotify Web API.",
+  "kinds": ["panel"],
+  "keepLoaded": true,
+  "entryPoints": {
+    "panel": "Gadget.qml"
+  }
+}

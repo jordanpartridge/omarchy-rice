@@ -1,0 +1,29 @@
+{
+  "era": "mac",
+  "room": "night",
+  "dont_paint": false,
+  "gaps": "classic",
+  "shadows": true,
+  "layouts": {
+    "mac": {
+      "bar": "bottom",
+      "gaps": "classic",
+      "shadows": true
+    },
+    "95": {
+      "bar": "bottom",
+      "gaps": "tight",
+      "shadows": false
+    },
+    "xp": {
+      "bar": "bottom",
+      "gaps": "classic",
+      "shadows": true
+    },
+    "dos": {
+      "bar": "bottom",
+      "gaps": "classic",
+      "shadows": false
+    }
+  }
+}

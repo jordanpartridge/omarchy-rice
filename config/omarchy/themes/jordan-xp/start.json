@@ -1,0 +1,15 @@
+{
+  "from": "#0A5C4A",
+  "to": "#0D6B4A",
+  "bar": "#12324A",
+  "bar_text": "#FFFEF8",
+  "header": "#16485A",
+  "footer": "#12324A",
+  "ink": "#141414",
+  "muted": "#3A3A3A",
+  "select": "#0D5C5E",
+  "select_text": "#FFFEF8",
+  "paper": "#F4F1E4",
+  "variant": "luna",
+  "chrome": "xp"
+}
