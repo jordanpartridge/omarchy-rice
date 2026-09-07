@@ -12,7 +12,8 @@ The older [`dotfiles`](https://github.com/jordanpartridge/dotfiles) tree is chez
 
 | Path | What |
 |---|---|
-| `config/omarchy/themes/` | `jordan-os`, `jordan-xp`, `mudhawk`, `skull`, `the-shit` |
+| `config/omarchy/themes/` | `jordan-os`, `jordan-xp`, `mudhawk`, `skull`, `the-shit`, `no-worktrees` |
+| `cmd/magic/` | Go spellbook (`magic` / `noworktrees`) |
 | `config/omarchy/plugins/` | Cabinet, gadgets, weather, tailscale, github-orgs, bar widgets, music |
 | `config/omarchy/hooks/` | Theme-set, post-boot gadgets, Stream Deck, voxtype |
 | `config/omarchy/branding/` | Screensaver + about (webcam capture stays on the machine) |
@@ -20,6 +21,22 @@ The older [`dotfiles`](https://github.com/jordanpartridge/dotfiles) tree is chez
 | `config/{ghostty,alacritty,kitty,foot}/` | 15pt JetBrainsMono; colors still come from the active theme |
 
 Not vendored: [BlueFerry](https://github.com/erikwb/omarchy-blueferry) (clone it). Webcam screensaver. `*.bak*` and Omarchy `.sample` hooks.
+
+## Magic
+
+Spellbook for this rice. Same dusk as the jump wallpaper: banner magenta, sun gold, **NO WORKTREES**.
+
+```bash
+make install          # ~/.local/bin/magic  and  noworktrees
+magic                 # TUI
+magic status          # machine card
+magic pulse           # breathe Hypr gaps
+magic flash           # banner / sun border
+magic jump            # omarchy theme set no-worktrees
+noworktrees           # same as magic jump
+```
+
+`make test` is plain Go. It does not need a Hypr worktree, a vendor dir, or the daily clone. Full clone or don't.
 
 ## Install
 

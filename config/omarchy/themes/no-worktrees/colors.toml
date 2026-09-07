@@ -1,0 +1,35 @@
+mode = "dark"
+
+# Dusk dirt, banner magenta, sun gold — pulled from the jump wallpaper.
+accent = "#e46592"
+selection = "#3a2438"
+muted = "#7a5e78"
+
+background = "#140c18"
+dark_background = "#0c0810"
+darker_background = "#07050b"
+lighter_background = "#24182c"
+
+foreground = "#f0e2d0"
+dark_foreground = "#8a7088"
+light_foreground = "#e4d0c4"
+bright_foreground = "#f7eee4"
+
+hyprland_active_border = "rgba(e46592ee) rgba(debb85ee) 45deg"
+hyprland_inactive_border = "rgba(3a2438aa)"
+
+red = "#c45a6a"
+yellow = "#debb85"
+orange = "#c47a6a"
+green = "#6a7a48"
+cyan = "#a888b0"
+blue = "#5a4a78"
+magenta = "#e46592"
+brown = "#5a3840"
+
+bright_red = "#e07080"
+bright_yellow = "#f0d4a0"
+bright_green = "#8a9a5c"
+bright_cyan = "#c4a8c8"
+bright_blue = "#7a6a98"
+bright_magenta = "#f080a8"

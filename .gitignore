@@ -14,3 +14,8 @@ config/omarchy/branding/screensaver-webcam.png
 .DS_Store
 *.swp
 *~
+
+# Local Go toolchain + built binary (full clone, not a worktree)
+.tools/
+bin/
+.grok-die
