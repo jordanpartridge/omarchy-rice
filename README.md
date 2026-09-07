@@ -28,12 +28,9 @@ Spellbook for this rice. Same dusk as the jump wallpaper: banner magenta, sun go
 
 ```bash
 make install          # ~/.local/bin/magic  and  noworktrees
-magic                 # TUI
-magic status          # machine card
-magic pulse           # breathe Hypr gaps
-magic flash           # banner / sun border
-magic jump            # omarchy theme set no-worktrees
-noworktrees           # same as magic jump
+magic                 # crouch, launch, land — this is the product
+magic poster          # fatbike in the terminal
+noworktrees           # plant the theme, then jump
 ```
 
 `make test` is plain Go. It does not need a Hypr worktree, a vendor dir, or the daily clone. Full clone or don't.

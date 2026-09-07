@@ -29,9 +29,9 @@ type spell struct {
 }
 
 var spells = []spell{
-	{"1", "pulse", "breathe hypr gaps"},
+	{"1", "jump", "crouch · launch · land"},
 	{"2", "flash", "banner / sun border"},
-	{"3", "jump", "plant no-worktrees"},
+	{"3", "pulse", "crouch only"},
 	{"4", "notify", "flag on the glass"},
 	{"5", "scan", "who is on the glass"},
 	{"6", "doctor", "trees vs clones"},
@@ -239,9 +239,9 @@ func runSpell(ctx context.Context, name string, pal palette.Palette) (string, er
 	case "flash":
 		return cast.Flash(ctx, h, pal)
 	case "jump":
-		return cast.Jump(ctx)
+		return cast.Ride(ctx, h, pal)
 	case "notify":
-		return cast.Notify(ctx, render.Slogan, "biker, not cyclist")
+		return cast.Notify(ctx, render.Slogan, "biker, not cyclist", glass.Wallpaper())
 	default:
 		return "", fmt.Errorf("unknown spell %s", name)
 	}

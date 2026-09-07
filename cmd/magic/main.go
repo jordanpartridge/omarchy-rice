@@ -14,8 +14,10 @@ import (
 
 	"github.com/jordanpartridge/omarchy-rice/internal/cast"
 	"github.com/jordanpartridge/omarchy-rice/internal/glass"
+	"github.com/jordanpartridge/omarchy-rice/internal/poster"
 	"github.com/jordanpartridge/omarchy-rice/internal/render"
 	"github.com/jordanpartridge/omarchy-rice/internal/tui"
+	"golang.org/x/term"
 )
 
 func main() {
@@ -32,14 +34,7 @@ func run(args []string) int {
 	}
 
 	if len(args) < 2 {
-		if isTTY() {
-			if err := tui.Run(); err != nil {
-				fmt.Fprintln(os.Stderr, err)
-				return 1
-			}
-			return 0
-		}
-		return cmdStatus(ctx)
+		return cmdJump(ctx)
 	}
 
 	switch args[1] {
@@ -54,7 +49,17 @@ func run(args []string) int {
 		snap := glass.Capture(ctx)
 		return wrap(cast.Flash(ctx, cast.LiveHypr{}, snap.Palette))
 	case "jump":
-		return wrap(cast.Jump(ctx))
+		return cmdJump(ctx)
+	case "plant":
+		return wrap(cast.Plant(ctx))
+	case "poster":
+		return cmdPoster()
+	case "tui":
+		if err := tui.Run(); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			return 1
+		}
+		return 0
 	case "notify":
 		headline, body := render.Slogan, "biker, not cyclist"
 		if len(args) > 2 {
@@ -63,7 +68,7 @@ func run(args []string) int {
 		if len(args) > 3 {
 			body = strings.Join(args[3:], " ")
 		}
-		return wrap(cast.Notify(ctx, headline, body))
+		return wrap(cast.Notify(ctx, headline, body, glass.Wallpaper()))
 	case "scan":
 		return cmdScan(ctx)
 	case "doctor":
@@ -74,6 +79,36 @@ func run(args []string) int {
 		fmt.Fprintf(os.Stderr, "unknown spell %q\n\n%s", args[1], render.Help())
 		return 2
 	}
+}
+
+func cmdJump(ctx context.Context) int {
+	_ = cmdPoster()
+	snap := glass.Capture(ctx)
+	return wrap(cast.Ride(ctx, cast.LiveHypr{}, snap.Palette))
+}
+
+func cmdPoster() int {
+	path := glass.Wallpaper()
+	if path == "" {
+		fmt.Fprintln(os.Stderr, "no jump wallpaper")
+		return 1
+	}
+	if !isTTY() {
+		fmt.Println(path)
+		return 0
+	}
+	cols := 88
+	if w, _, err := term.GetSize(int(os.Stdout.Fd())); err == nil && w > 40 {
+		cols = w
+		if cols > 120 {
+			cols = 120
+		}
+	}
+	if err := poster.Write(os.Stdout, path, cols, 22); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		return 1
+	}
+	return 0
 }
 
 func cmdStatus(ctx context.Context) int {

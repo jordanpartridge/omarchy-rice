@@ -196,19 +196,20 @@ func Scan(snap glass.Snapshot, s Styles) string {
 
 func Help() string {
 	return strings.TrimSpace(`
-magic — Omarchy spellbook. NO WORKTREES. Biker, not cyclist.
+magic — jump the glass. NO WORKTREES. Biker, not cyclist.
 
-  magic            open the spellbook
+  magic            crouch, launch, land (this is the product)
+  magic poster     fatbike in the terminal
+  magic plant      omarchy theme set no-worktrees
+  magic pulse      crouch only
+  magic flash      banner / sun border
   magic status     machine card
-  magic pulse      breathe hypr gaps
-  magic flash      banner magenta / sun gold
-  magic jump       plant the no-worktrees theme
-  magic notify     flag on the glass
-  magic scan       workspaces + clients
+  magic scan       who is on the glass
+  magic tui        old spell list
   magic watch      hypr events
   magic doctor     trees vs clones
 
-  noworktrees      same as magic jump
+  noworktrees      plant + jump
 
 No git worktrees. Full clone or don't.
 `) + "\n"

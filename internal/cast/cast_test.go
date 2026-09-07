@@ -17,80 +17,101 @@ func (f *fakeHypr) Option(_ context.Context, name string) (string, error) {
 	return f.opts[name], nil
 }
 
-func (f *fakeHypr) Keyword(_ context.Context, name, value string) error {
-	f.log = append(f.log, name+"="+value)
-	f.opts[name] = value
+func (f *fakeHypr) Config(_ context.Context, lua string) error {
+	f.log = append(f.log, lua)
 	return nil
 }
 
-func TestPlanPulseReturnsHome(t *testing.T) {
-	frames := PlanPulse(5, 10, 2, 12, 4)
-	if len(frames) == 0 {
-		t.Fatal("no frames")
+func baseFake() *fakeHypr {
+	return &fakeHypr{opts: map[string]string{
+		"general:gaps_in":           "5 5 5 5",
+		"general:gaps_out":          "10 10 10 10",
+		"general:border_size":       "2",
+		"decoration:rounding":       "0",
+		"cursor:zoom_factor":        "1",
+		"decoration:dim_inactive":   "false",
+		"decoration:dim_strength":   "0.5",
+		"general:col.active_border": "eee46592 eedebb85 45deg",
+	}}
+}
+
+func TestPlanRideCrouchThenApex(t *testing.T) {
+	base := Look{GapsIn: 5, GapsOut: 10, Border: 2, Zoom: 1, DimStrength: 0.5, BorderA: "e46592ee", BorderB: "debb85ee", Angle: 45}
+	beats := PlanRide(base, palette.Jump())
+	if len(beats) < 5 {
+		t.Fatalf("short ride %d", len(beats))
 	}
-	peak := frames[0]
-	for _, f := range frames {
-		if f.GapsIn > peak.GapsIn {
-			peak = f
+	if beats[0].Name != "crouch" {
+		t.Fatal(beats[0].Name)
+	}
+	if beats[0].GapsOut >= 10 {
+		t.Fatalf("crouch should compress, got %d", beats[0].GapsOut)
+	}
+	var apex Beat
+	for _, b := range beats {
+		if b.Zoom > apex.Zoom {
+			apex = b
 		}
 	}
-	if peak.GapsIn != 5+12 {
-		t.Fatalf("peak in %d", peak.GapsIn)
+	if apex.Name != "apex" || apex.Zoom < 1.4 {
+		t.Fatalf("apex %+v", apex)
 	}
-	last := frames[len(frames)-1]
-	if last.GapsIn != 5 || last.GapsOut != 10 {
-		t.Fatalf("did not restore: %+v", last)
+	if !strings.Contains(apex.Lua(), "hl.config") {
+		t.Fatal(apex.Lua())
+	}
+	if !strings.Contains(apex.Lua(), "zoom_factor") {
+		t.Fatal(apex.Lua())
 	}
 }
 
-func TestPulseRestoresOriginal(t *testing.T) {
-	h := &fakeHypr{opts: map[string]string{
-		"general:gaps_in":     "5 5 5 5",
-		"general:gaps_out":    "10 10 10 10",
-		"general:border_size": "2",
-	}}
-	msg, err := Pulse(context.Background(), h)
+func TestRideRestoresOriginalLua(t *testing.T) {
+	h := baseFake()
+	msg, err := Ride(context.Background(), h, palette.Jump())
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !strings.Contains(msg, "restored") {
+	if msg != "jumped" {
 		t.Fatal(msg)
 	}
-	if h.opts["general:gaps_in"] != "5 5 5 5" {
-		t.Fatalf("gaps_in ended at %s", h.opts["general:gaps_in"])
+	if len(h.log) < 4 {
+		t.Fatalf("expected a ride, got %d configs", len(h.log))
 	}
-	if h.opts["general:gaps_out"] != "10 10 10 10" {
-		t.Fatalf("gaps_out ended at %s", h.opts["general:gaps_out"])
+	last := h.log[len(h.log)-1]
+	if !strings.Contains(last, "gaps_in = 5") || !strings.Contains(last, "gaps_out = 10") {
+		t.Fatalf("did not land: %s", last)
 	}
-	if len(h.log) < 6 {
-		t.Fatalf("expected a breathe, got %d keywords", len(h.log))
-	}
-}
-
-func TestFlashUsesPersonaColors(t *testing.T) {
-	h := &fakeHypr{opts: map[string]string{
-		"general:col.active_border": "rgba(e46592ee) rgba(debb85ee) 45deg",
-	}}
-	p := palette.Jump()
-	if _, err := Flash(context.Background(), h, p); err != nil {
-		t.Fatal(err)
-	}
-	joined := strings.Join(h.log, "\n")
-	if !strings.Contains(joined, "e46592") {
-		t.Fatal("missing banner magenta")
-	}
-	if !strings.Contains(joined, "debb85") {
-		t.Fatal("missing sun gold")
+	if !strings.Contains(last, "zoom_factor = 1.00") {
+		t.Fatalf("zoom not restored: %s", last)
 	}
 }
 
-func TestParseOptionJSON(t *testing.T) {
-	v, err := parseOptionJSON([]byte(`{"option":"general:gaps_in","css":"5 5 5 5","set":true}`))
+func TestParseOptionJSONKinds(t *testing.T) {
+	v, err := parseOptionJSON([]byte(`{"css":"5 5 5 5"}`))
 	if err != nil || v != "5 5 5 5" {
 		t.Fatalf("%q %v", v, err)
 	}
-	v, err = parseOptionJSON([]byte(`{"int":2,"set":true}`))
-	if err != nil || v != "2" {
+	v, err = parseOptionJSON([]byte(`{"float":1.45}`))
+	if err != nil || v != "1.45" {
 		t.Fatalf("%q %v", v, err)
+	}
+	v, err = parseOptionJSON([]byte(`{"bool":true}`))
+	if err != nil || v != "true" {
+		t.Fatalf("%q %v", v, err)
+	}
+}
+
+func TestPackedToRGBA(t *testing.T) {
+	if packedToRGBA("eee46592") != "e46592ee" {
+		t.Fatal(packedToRGBA("eee46592"))
+	}
+}
+
+func TestLookLuaUsesEvalConfig(t *testing.T) {
+	lua := Look{GapsIn: 5, GapsOut: 10, Border: 2, Zoom: 1, DimStrength: 0.5, BorderA: "e46592ee", BorderB: "debb85ee", Angle: 45}.Lua()
+	if strings.Contains(lua, "keyword") {
+		t.Fatal("keyword is a no-op on Omarchy")
+	}
+	if !strings.HasPrefix(lua, "hl.config") {
+		t.Fatal(lua)
 	}
 }

@@ -245,6 +245,28 @@ func FirstCSSGap(s string) int {
 	return n
 }
 
+func Wallpaper() string {
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return ""
+	}
+	candidates := []string{
+		filepath.Join(home, ".local/state/omarchy/current/background"),
+		filepath.Join(home, ".config/omarchy/themes/no-worktrees/backgrounds/0-jordan-jump.jpg"),
+		filepath.Join(home, ".local/state/omarchy/current/theme/backgrounds/0-jordan-jump.jpg"),
+	}
+	for _, p := range candidates {
+		target := p
+		if dest, err := filepath.EvalSymlinks(p); err == nil {
+			target = dest
+		}
+		if st, err := os.Stat(target); err == nil && !st.IsDir() {
+			return target
+		}
+	}
+	return ""
+}
+
 func EventSocket() string {
 	sig := os.Getenv("HYPRLAND_INSTANCE_SIGNATURE")
 	runtime := os.Getenv("XDG_RUNTIME_DIR")
