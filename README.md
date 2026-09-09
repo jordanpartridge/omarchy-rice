@@ -15,6 +15,7 @@ The older [`dotfiles`](https://github.com/jordanpartridge/dotfiles) tree is chez
 | `config/omarchy/themes/` | `jordan-os`, `jordan-xp`, `mudhawk`, `skull`, `the-shit` |
 | `config/omarchy/plugins/` | Cabinet, gadgets, weather, tailscale, github-orgs, bar widgets, music |
 | `config/omarchy/hooks/` | Theme-set, post-boot gadgets, Stream Deck, voxtype |
+| `streamdeck-plus/` | Stream Deck Plus HID dispatcher (pages, play toggle, workspaces) |
 | `config/omarchy/branding/` | Screensaver + about (webcam capture stays on the machine) |
 | `config/hypr/` | Bindings, window rules, Thor monitor layout |
 | `config/{ghostty,alacritty,kitty,foot}/` | 15pt JetBrainsMono; colors still come from the active theme |

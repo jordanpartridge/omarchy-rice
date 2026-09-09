@@ -38,6 +38,21 @@ cp "$ROOT/config/ghostty/config" "$HOME/.config/ghostty/config"
 cp "$ROOT/config/foot/foot.ini" "$HOME/.config/foot/foot.ini"
 cp "$ROOT/config/kitty/kitty.conf" "$HOME/.config/kitty/kitty.conf"
 
+if (( THOR )) && [[ -d "$ROOT/streamdeck-plus" ]]; then
+  mkdir -p "$HOME/.local/share/omarchy-streamdeck-demo/icons" \
+    "$HOME/.local/bin" \
+    "$HOME/.config/systemd/user"
+  rsync -a --exclude '.gitignore' --exclude 'README.md' --exclude '*.service' \
+    --exclude 'bin/' \
+    "$ROOT/streamdeck-plus/" "$HOME/.local/share/omarchy-streamdeck-demo/"
+  install -m 0755 "$ROOT/streamdeck-plus/bin/streamdeck-plus" "$HOME/.local/bin/streamdeck-plus"
+  install -m 0644 "$ROOT/streamdeck-plus/streamdeck-plus.service" \
+    "$HOME/.config/systemd/user/streamdeck-plus.service"
+  systemctl --user daemon-reload
+  systemctl --user enable --now streamdeck-plus.service >/dev/null 2>&1 || true
+  echo "streamdeck-plus unit enabled (waits if the Plus is unplugged)"
+fi
+
 cat <<'EOF'
 installed into ~/.config
 

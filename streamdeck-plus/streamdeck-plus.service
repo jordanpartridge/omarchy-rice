@@ -1,0 +1,19 @@
+[Unit]
+Description=Omarchy Stream Deck Plus dispatcher
+PartOf=graphical-session.target
+After=graphical-session.target
+StartLimitIntervalSec=120
+StartLimitBurst=8
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 %h/.local/share/omarchy-streamdeck-demo/demo.py --serve
+WorkingDirectory=%h/.local/share/omarchy-streamdeck-demo
+Restart=on-failure
+RestartSec=10
+Environment=PYTHONUNBUFFERED=1
+Environment=XDG_RUNTIME_DIR=%t
+Environment=PATH=%h/.config/composer/vendor/bin:%h/.local/bin:/usr/share/omarchy/bin:/usr/bin
+
+[Install]
+WantedBy=graphical-session.target
