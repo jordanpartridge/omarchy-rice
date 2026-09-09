@@ -25,4 +25,27 @@ cp "$HOME/.config/ghostty/config" "$ROOT/config/ghostty/config"
 cp "$HOME/.config/foot/foot.ini" "$ROOT/config/foot/foot.ini"
 cp "$HOME/.config/kitty/kitty.conf" "$ROOT/config/kitty/kitty.conf"
 
+LIVE_DECK="$HOME/.local/share/omarchy-streamdeck-demo"
+if [[ -d "$LIVE_DECK" ]]; then
+  mkdir -p "$ROOT/streamdeck-plus/icons"
+  rsync -a \
+    --exclude '__pycache__/' \
+    --exclude 'faces/' \
+    --exclude 'icons/tinted/' \
+    --exclude 'serve.log' \
+    --exclude 'serve.pid' \
+    --exclude 'inbox.jsonl' \
+    --exclude 'jobs/' \
+    --exclude '*.pyc' \
+    "$LIVE_DECK/demo.py" "$LIVE_DECK/actions.py" "$ROOT/streamdeck-plus/"
+  if compgen -G "$LIVE_DECK/icons/*.jpg" >/dev/null; then
+    rsync -a "$LIVE_DECK/icons/"*.jpg "$ROOT/streamdeck-plus/icons/"
+  fi
+  if [[ -f "$HOME/.config/systemd/user/streamdeck-plus.service" ]]; then
+    # Keep %h in git; live unit may still say /home/jordan from before the overlay.
+    :
+  fi
+  echo "snapshot: streamdeck-plus"
+fi
+
 echo "snapshot: $ROOT/config"
